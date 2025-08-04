@@ -1,0 +1,13 @@
+# Dépendances Python pour le projet Dashboard de Suivi
+
+# Le script populate_firestore.py utilise uniquement les modules Python standard :
+# - re (expressions régulières)
+# - json (manipulation JSON)  
+# - os (système de fichiers)
+
+# Aucune dépendance externe n'est requise pour le fonctionnement de base
+# du projet, mais voici quelques suggestions pour des fonctionnalités avancées :
+
+# requests>=2.28.0          # Pour récupérer des données depuis des APIs
+# python-dateutil>=2.8.2    # Pour une meilleure gestion des dates
+# pyyaml>=6.0               # Pour supporter les fichiers YAML en plus du Markdown

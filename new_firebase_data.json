@@ -1,0 +1,398 @@
+{
+  "phases": [
+    {
+      "id": "phase_1",
+      "title": "VALIDATION FONDAMENTALE & CALIBRATION",
+      "duration_weeks": 4,
+      "date_range": "28 Juillet - 25 Août",
+      "objective": "Transformer le solveur WENO existant en simulateur de corridor validé et calibré."
+    },
+    {
+      "id": "phase_2",
+      "title": "AGENT RL & OPTIMISATION INTELLIGENTE",
+      "duration_weeks": 3,
+      "date_range": "26 Août - 15 Septembre",
+      "objective": "Développer et entraîner l'agent RL performant."
+    },
+    {
+      "id": "phase_3",
+      "title": "FINALISATION & DÉMONSTRATION",
+      "duration_weeks": 3,
+      "date_range": "16 Septembre - 10 Octobre",
+      "objective": "Analyser, démontrer et communiquer les résultats."
+    }
+  ],
+  "weeks": [
+    {
+      "id": "week_1",
+      "week_number": 1,
+      "phase_id": "phase_1",
+      "sub_phase_id": "PHASE I.A",
+      "sub_phase_title": "Validation Numérique Rigoureuse",
+      "date_range": "28 juil. - 3 août",
+      "objective": "Preuves Mathématiques de Correction"
+    },
+    {
+      "id": "week_2",
+      "week_number": 2,
+      "phase_id": "phase_1",
+      "sub_phase_id": "PHASE I.B",
+      "sub_phase_title": "Modélisation des Intersections",
+      "date_range": "4 août - 10 août",
+      "objective": "Infrastructure Réseau"
+    },
+    {
+      "id": "week_3",
+      "week_number": 3,
+      "phase_id": "phase_1",
+      "sub_phase_id": "PHASE I.C",
+      "sub_phase_title": "Calibration Multi-Métrique",
+      "date_range": "11 août - 17 août",
+      "objective": "Ancrage Données Réelles"
+    },
+    {
+      "id": "week_4",
+      "week_number": 4,
+      "phase_id": "phase_1",
+      "sub_phase_id": "PHASE I.D",
+      "sub_phase_title": "Validation Phénoménologique",
+      "date_range": "18 août - 25 août",
+      "objective": "Tests de Réalisme Physique"
+    },
+    {
+      "id": "week_5",
+      "week_number": 5,
+      "phase_id": "phase_2",
+      "sub_phase_id": "PHASE II.A",
+      "sub_phase_title": "Environnement d'Apprentissage",
+      "date_range": "26 août - 1er sept.",
+      "objective": "Interface Gymnasium"
+    },
+    {
+      "id": "week_6",
+      "week_number": 6,
+      "phase_id": "phase_2",
+      "sub_phase_id": "PHASE II.B",
+      "sub_phase_title": "Implémentation Agent DDQN",
+      "date_range": "2 sept. - 8 sept.",
+      "objective": "Architecture Neuronale"
+    },
+    {
+      "id": "week_7",
+      "week_number": 7,
+      "phase_id": "phase_2",
+      "sub_phase_id": "PHASE II.C",
+      "sub_phase_title": "Entraînement & Convergence",
+      "date_range": "9 sept. - 15 sept.",
+      "objective": "Apprentissage Supervisé"
+    },
+    {
+      "id": "week_8",
+      "week_number": 8,
+      "phase_id": "phase_3",
+      "sub_phase_id": "PHASE III.A",
+      "sub_phase_title": "Analyse de Performance",
+      "date_range": "16 sept. - 22 sept.",
+      "objective": "Évaluation Quantitative"
+    },
+    {
+      "id": "week_9",
+      "week_number": 9,
+      "phase_id": "phase_3",
+      "sub_phase_id": "PHASE III.B",
+      "sub_phase_title": "Visualisation & Démonstration",
+      "date_range": "23 sept. - 29 sept.",
+      "objective": "Communication Impactante"
+    },
+    {
+      "id": "week_10",
+      "week_number": 10,
+      "phase_id": "phase_3",
+      "sub_phase_id": "PHASE III.C",
+      "sub_phase_title": "Sprint Final",
+      "date_range": "30 sept. - 10 oct.",
+      "objective": "Assemblage & Soutenance"
+    }
+  ],
+  "deliverables": [
+    {
+      "id": "I.A.R1",
+      "description": "Chapitre 1 (État de l'art) - Version draft complète",
+      "details": "",
+      "type": "Rédaction",
+      "week_id": "week_1",
+      "status": "pending",
+      "progress": 0,
+      "link_to_result": ""
+    },
+    {
+      "id": "I.A.R2",
+      "description": "Chapitre 2 (RL & Contexte) - Version draft complète",
+      "details": "",
+      "type": "Rédaction",
+      "week_id": "week_1",
+      "status": "pending",
+      "progress": 0,
+      "link_to_result": ""
+    },
+    {
+      "id": "I.B.R1",
+      "description": "Chapitre 3 (Modèle ARZ Étendu) - 60% complété",
+      "details": "",
+      "type": "Rédaction",
+      "week_id": "week_2",
+      "status": "pending",
+      "progress": 0,
+      "link_to_result": ""
+    },
+    {
+      "id": "I.B.R2",
+      "description": "Sections mathématiques : formulation intersections",
+      "details": "",
+      "type": "Rédaction",
+      "week_id": "week_2",
+      "status": "pending",
+      "progress": 0,
+      "link_to_result": ""
+    },
+    {
+      "id": "I.C.R1",
+      "description": "Chapitre 4 (Implémentation Numérique) - 70% complété",
+      "details": "",
+      "type": "Rédaction",
+      "week_id": "week_3",
+      "status": "pending",
+      "progress": 0,
+      "link_to_result": ""
+    },
+    {
+      "id": "I.C.R2",
+      "description": "Chapitre 5 (Calibration) - Version draft",
+      "details": "",
+      "type": "Rédaction",
+      "week_id": "week_3",
+      "status": "pending",
+      "progress": 0,
+      "link_to_result": ""
+    },
+    {
+      "id": "I.D.R1",
+      "description": "Chapitre 5 (Calibration) - Version complète",
+      "details": "",
+      "type": "Rédaction",
+      "week_id": "week_4",
+      "status": "pending",
+      "progress": 0,
+      "link_to_result": ""
+    },
+    {
+      "id": "I.D.R2",
+      "description": "Chapitre 6 (Validation) - 50% complété",
+      "details": "",
+      "type": "Rédaction",
+      "week_id": "week_4",
+      "status": "pending",
+      "progress": 0,
+      "link_to_result": ""
+    },
+    {
+      "id": "II.A.R1",
+      "description": "Chapitre 6 (Validation) - Version complète",
+      "details": "",
+      "type": "Rédaction",
+      "week_id": "week_5",
+      "status": "pending",
+      "progress": 0,
+      "link_to_result": ""
+    },
+    {
+      "id": "II.A.R2",
+      "description": "Chapitre 7 (Agent RL) - Structure + intro",
+      "details": "",
+      "type": "Rédaction",
+      "week_id": "week_5",
+      "status": "pending",
+      "progress": 0,
+      "link_to_result": ""
+    },
+    {
+      "id": "II.B.R1",
+      "description": "Chapitre 7 (Agent RL) - 70% complété",
+      "details": "",
+      "type": "Rédaction",
+      "week_id": "week_6",
+      "status": "pending",
+      "progress": 0,
+      "link_to_result": ""
+    },
+    {
+      "id": "II.B.R2",
+      "description": "Sections techniques : architecture détaillée",
+      "details": "",
+      "type": "Rédaction",
+      "week_id": "week_6",
+      "status": "pending",
+      "progress": 0,
+      "link_to_result": ""
+    },
+    {
+      "id": "II.C.R1",
+      "description": "Chapitre 7 (Agent RL) - Version complète",
+      "details": "",
+      "type": "Rédaction",
+      "week_id": "week_7",
+      "status": "pending",
+      "progress": 0,
+      "link_to_result": ""
+    },
+    {
+      "id": "II.C.R2",
+      "description": "Chapitre 8 (Évaluation) - Structure + résultats préliminaires",
+      "details": "",
+      "type": "Rédaction",
+      "week_id": "week_7",
+      "status": "pending",
+      "progress": 0,
+      "link_to_result": ""
+    },
+    {
+      "id": "III.A.R1",
+      "description": "Chapitre 8 (Évaluation) - Version complète",
+      "details": "",
+      "type": "Rédaction",
+      "week_id": "week_8",
+      "status": "pending",
+      "progress": 0,
+      "link_to_result": ""
+    },
+    {
+      "id": "III.A.R2",
+      "description": "Discussion critique des résultats",
+      "details": "",
+      "type": "Rédaction",
+      "week_id": "week_8",
+      "status": "pending",
+      "progress": 0,
+      "link_to_result": ""
+    },
+    {
+      "id": "III.B.R1",
+      "description": "Conclusion générale - Version complète",
+      "details": "",
+      "type": "Rédaction",
+      "week_id": "week_9",
+      "status": "pending",
+      "progress": 0,
+      "link_to_result": ""
+    },
+    {
+      "id": "III.B.R2",
+      "description": "Perspectives et recommandations",
+      "details": "",
+      "type": "Rédaction",
+      "week_id": "week_9",
+      "status": "pending",
+      "progress": 0,
+      "link_to_result": ""
+    },
+    {
+      "id": "III.C.R1",
+      "description": "Relecture finale + corrections",
+      "details": "",
+      "type": "Rédaction",
+      "week_id": "week_10",
+      "status": "pending",
+      "progress": 0,
+      "link_to_result": ""
+    },
+    {
+      "id": "III.C.R2",
+      "description": "Annexes techniques complètes",
+      "details": "Technique : % d'objectifs livrables atteints / semaine Rédaction : % de progression mémoire (par chapitre) Qualité : Nombre tests passés / tests totaux Performance : Métriques agent RL (si applicable) Fin Semaine 4 : Simulateur validé → Go/No-Go Phase II Fin Semaine 7 : Agent convergent → Go/No-Go Phase III Fin Semaine 9 : Mémoire 90% → Go/No-Go Finalisation Risque Technique : Tests unitaires continus + validation incrémentale Risque Temporel : Priorisation stricte livrables critiques Risque Qualité : Revues hebdomadaires + feedback loops",
+      "type": "Rédaction",
+      "week_id": "week_10",
+      "status": "pending",
+      "progress": 0,
+      "link_to_result": ""
+    }
+  ],
+  "chapters": [
+    {
+      "id": "chapter_1",
+      "title": "État de l'art",
+      "status": "draft",
+      "progress": 0,
+      "related_deliverables": [
+        "I.A.R1"
+      ]
+    },
+    {
+      "id": "chapter_2",
+      "title": "RL & Contexte",
+      "status": "draft",
+      "progress": 0,
+      "related_deliverables": [
+        "I.A.R2"
+      ]
+    },
+    {
+      "id": "chapter_3",
+      "title": "Modèle ARZ Étendu",
+      "status": "draft",
+      "progress": 0,
+      "related_deliverables": [
+        "I.B.R1"
+      ]
+    },
+    {
+      "id": "chapter_4",
+      "title": "Implémentation Numérique",
+      "status": "draft",
+      "progress": 0,
+      "related_deliverables": [
+        "I.C.R1"
+      ]
+    },
+    {
+      "id": "chapter_5",
+      "title": "Calibration",
+      "status": "draft",
+      "progress": 0,
+      "related_deliverables": [
+        "I.C.R2",
+        "I.D.R1"
+      ]
+    },
+    {
+      "id": "chapter_6",
+      "title": "Validation",
+      "status": "draft",
+      "progress": 0,
+      "related_deliverables": [
+        "I.D.R2",
+        "II.A.R1"
+      ]
+    },
+    {
+      "id": "chapter_7",
+      "title": "Agent RL",
+      "status": "draft",
+      "progress": 0,
+      "related_deliverables": [
+        "II.A.R2",
+        "II.B.R1",
+        "II.C.R1"
+      ]
+    },
+    {
+      "id": "chapter_8",
+      "title": "Évaluation",
+      "status": "draft",
+      "progress": 0,
+      "related_deliverables": [
+        "II.C.R2",
+        "III.A.R1"
+      ]
+    }
+  ]
+}

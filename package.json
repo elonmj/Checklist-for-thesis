@@ -1,0 +1,32 @@
+{
+    "name": "memoire-dashboard",
+    "version": "3.0.0",
+    "description": "Dashboard interactif pour projets de soutenance avec Firebase et RL",
+    "main": "import_data.js",
+    "scripts": {
+        "setup": "npm install",
+        "generate-data": "python populate_firestore.py",
+        "import": "node import_data.js",
+        "export": "node export_simple.js",
+        "clean": "node delete_old_data.js",
+        "deploy": "firebase deploy",
+        "dev": "firebase serve --only hosting",
+        "install-deps": "npm install firebase-admin && pip install -r requirements.txt"
+    },
+    "dependencies": {
+        "firebase-admin": "^12.7.0"
+    },
+    "engines": {
+        "node": ">=14.0.0"
+    },
+    "keywords": [
+        "dashboard",
+        "firebase",
+        "planning",
+        "soutenance",
+        "rl",
+        "traffic"
+    ],
+    "author": "Votre Nom",
+    "license": "MIT"
+}

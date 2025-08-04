@@ -1,0 +1,196 @@
+/* Variables CSS */
+:root {
+    --primary-color: #2563eb;
+    --secondary-color: #1e40af;
+    --success-color: #28a745;
+    --danger-color: #dc3545;
+    --info-color: #007bff;
+    --muted-color: #6c757d;
+    --text-primary: #1f2937;
+    --text-secondary: #6b7280;
+    --background: #f8fafc;
+    --card-background: #ffffff;
+    --border-color: #e5e7eb;
+    --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    --font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+body {
+    font-family: var(--font-family);
+    background-color: var(--background);
+    color: var(--text-primary);
+    line-height: 1.6;
+    margin: 0;
+}
+
+.container {
+    max-width: 1600px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+header {
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    color: white;
+    padding: 1.5rem 2rem;
+    border-radius: 12px;
+    margin-bottom: 2rem;
+    box-shadow: var(--shadow);
+}
+
+h1, h2, h3 {
+    color: var(--text-primary);
+    margin-top: 0;
+}
+
+.tabs {
+    display: flex;
+    border-bottom: 2px solid var(--border-color);
+    margin-bottom: 2rem;
+}
+
+.tab-button {
+    background: none;
+    border: none;
+    padding: 1rem 1.5rem;
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    cursor: pointer;
+    border-bottom: 3px solid transparent;
+    transition: all 0.3s ease;
+}
+
+.tab-button:hover { color: var(--primary-color); }
+.tab-button.active {
+    color: var(--primary-color);
+    border-bottom-color: var(--primary-color);
+}
+
+.tab-content { display: none; animation: fadeIn 0.5s ease; }
+.tab-content.active { display: block; }
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+/* Section Planning */
+#planning-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.phase-card {
+    background: var(--card-background);
+    padding: 1.5rem 2rem;
+    border-radius: 12px;
+    box-shadow: var(--shadow);
+    border: 1px solid var(--border-color);
+}
+
+.phase-objective {
+    font-style: italic;
+    color: var(--text-secondary);
+    border-left: 3px solid var(--primary-color);
+    padding-left: 1rem;
+    margin: 1rem 0;
+}
+
+.phase-deliverables-list {
+    list-style: none;
+    padding: 0;
+    margin: 1rem 0 0 0;
+}
+
+.phase-deliverables-list li {
+    padding: 0.5rem 0;
+    border-bottom: 1px solid var(--border-color);
+    position: relative;
+    padding-left: 20px;
+}
+
+.phase-deliverables-list li:last-child {
+    border-bottom: none;
+}
+
+.phase-deliverables-list li::before {
+    content: '';
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+/* Statuts dans la liste du planning */
+.phase-deliverables-list li.status-termine::before { background-color: var(--success-color); }
+.phase-deliverables-list li.status-en-retard::before { background-color: var(--danger-color); }
+.phase-deliverables-list li.status-en-cours::before { background-color: var(--info-color); }
+.phase-deliverables-list li.status-non-commence::before { background-color: var(--muted-color); }
+
+
+/* Section Livrables */
+.deliverables-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.deliverable-item {
+    background: var(--card-background);
+    border: 1px solid var(--border-color);
+    border-left-width: 5px;
+    border-radius: 8px;
+    padding: 1rem 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: var(--shadow);
+}
+
+.deliverable-info h4 { margin: 0 0 0.25rem 0; }
+.deliverable-info p { margin: 0; font-size: 0.9rem; color: var(--text-secondary); }
+
+/* Statuts des livrables */
+.deliverable-item.status-termine { border-left-color: var(--success-color); background-color: #f0fff4; }
+.deliverable-item.status-en-retard { border-left-color: var(--danger-color); background-color: #fff5f5; }
+.deliverable-item.status-en-cours { border-left-color: var(--info-color); }
+.deliverable-item.status-non-commence { border-left-color: var(--muted-color); }
+
+.completion-toggle {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+}
+
+/* Sections Graphiques & Gantt */
+.overview-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    gap: 2rem;
+}
+
+.chart-card, .gantt-container {
+    background: var(--card-background);
+    padding: 1.5rem;
+    border-radius: 12px;
+    box-shadow: var(--shadow);
+}
+
+.chart-card { height: 450px; }
+.gantt-container { height: 800px; }
+
+footer {
+    text-align: center;
+    margin-top: 2rem;
+    color: var(--text-secondary);
+}
+
+.error-message {
+    background-color: var(--danger-color);
+    color: white;
+    padding: 1rem;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+    text-align: center;
+}

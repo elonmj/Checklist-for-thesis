@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tableau de Bord v2.5 - Projet RL Traffic Control</title>
+    <link rel="stylesheet" href="styles.css">
+    <!-- Chart.js & Adapter -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/date-fns@2.29.3/cdn.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns@2.0.0/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
+    <!-- Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js"></script>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🚦 Tableau de Bord v2.5 - Projet RL Traffic Control</h1>
+            <div class="project-info">
+                <span id="project-status">🟡 Chargement...</span>
+            </div>
+        </header>
+
+        <nav class="tabs">
+            <button class="tab-button" data-tab="overview">Vue d'ensemble</button>
+            <button class="tab-button" data-tab="planning">Planning</button>
+            <button class="tab-button" data-tab="deliverables">Livrables</button>
+            <button class="tab-button" data-tab="gantt">Gantt</button>
+        </nav>
+
+        <main>
+            <!-- Vue d'ensemble (Accueil) -->
+            <section id="overview" class="tab-content">
+                <div class="overview-grid">
+                    <div class="chart-card">
+                        <h3>Progression par Phase</h3>
+                        <canvas id="phases-bar-chart"></canvas>
+                    </div>
+                    <div class="chart-card">
+                        <h3>Répartition par Statut</h3>
+                        <canvas id="status-pie-chart"></canvas>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Planning -->
+            <section id="planning" class="tab-content">
+                <div class="planning-header">
+                    <h2>Déroulé du Projet par Phase</h2>
+                </div>
+                <div id="planning-container">
+                    <!-- Généré par script.js -->
+                </div>
+            </section>
+
+            <!-- Livrables -->
+            <section id="deliverables" class="tab-content">
+                <div class="deliverables-header">
+                    <h2>Suivi Détaillé des Livrables</h2>
+                </div>
+                <div class="deliverables-container" id="deliverables-container">
+                    <!-- Généré par script.js -->
+                </div>
+            </section>
+
+            <!-- Gantt -->
+            <section id="gantt" class="tab-content">
+                 <div class="gantt-header">
+                    <h2>Timeline du Projet (Gantt)</h2>
+                </div>
+                <div class="gantt-container">
+                    <canvas id="gantt-chart"></canvas>
+                </div>
+            </section>
+        </main>
+
+        <footer>
+            <p>Projet Mémoire 2025 - Version 2.5</p>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
