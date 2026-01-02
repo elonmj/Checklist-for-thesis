@@ -7,13 +7,13 @@
 
 ---
 
-## 🚀 Applications Déployées
+## 🚀 Application Déployée
 
 | Application | Description | Lien |
 |-------------|-------------|------|
-| **🎯 ALIBI** | Habit tracker simple et rapide | [memoire-20adc.web.app](https://memoire-20adc.web.app) |
-| **🎯 ALIBI Pro** | Version avancée avec suivi complet | [memoire-20adc.web.app/habit-tracker-plus](https://memoire-20adc.web.app/habit-tracker-plus) |
-| **📊 Dashboard** | Suivi de projet/mémoire | [memoire-20adc.web.app/dashboard](https://memoire-20adc.web.app/dashboard) |
+| **🎯 ALIBI Pro** | Habit Tracker avancé avec catégories, fréquences flexibles et options | [memoire-20adc.web.app](https://memoire-20adc.web.app) |
+
+> **Note:** ALIBI Pro est maintenant l'application principale. Les versions antérieures (habit-tracker simple et dashboard) sont disponibles en local dans leurs dossiers respectifs.
 
 ---
 
@@ -21,7 +21,7 @@
 
 > **Transforme tes intentions en habitudes. Ultra-simple, ultra-puissant.**
 
-### 🌐 [Accéder à l'application →](https://memoire-20adc.web.app)
+### 📁 Disponible en local dans `/habit-tracker`
 
 ### ✨ Fonctionnalités
 
@@ -36,8 +36,8 @@
 
 ### 🚀 Comment utiliser
 
-1. **Ouvre** [https://memoire-20adc.web.app](https://memoire-20adc.web.app)
-2. **Ajoute** tes habitudes (ex: "Méditation", "Sport", "Lire 30min")
+1. **Ouvre** [https://memoire-20adc.web.app](https://memoire-20adc.web.app) (ALIBI Pro)
+2. **Ajoute** tes habitudes avec catégories et fréquences personnalisées
 3. **Coche** chaque jour quand c'est fait
 4. **Célèbre** tes streaks ! 🎊
 
@@ -45,9 +45,9 @@
 
 ## 🎯 ALIBI Pro - Habit Tracker Avancé
 
-> **Pour ceux qui veulent un suivi complet et personnalisé.**
+> **Pour ceux qui veulent un suivi complet et personnalisé. Transforme tes intentions en habitudes.**
 
-### 🌐 [Accéder à ALIBI Pro →](https://memoire-20adc.web.app/habit-tracker-plus)
+### 🌐 [Accéder à ALIBI Pro →](https://memoire-20adc.web.app)
 
 ### ✨ Nouvelles Fonctionnalités
 
@@ -82,7 +82,7 @@ Quand tu complètes une habitude avec options :
 
 Ce projet fournit un tableau de bord interactif et personnalisable pour suivre l'avancement de n'importe quel projet de soutenance, mémoire ou projet complexe.
 
-### 🌐 [Accéder au Dashboard →](https://memoire-20adc.web.app/dashboard)
+### 📁 Disponible en local dans `/dashboard`
 
 ### ✨ Fonctionnalités
 
