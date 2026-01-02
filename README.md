@@ -1,15 +1,90 @@
-# 🚀 Dashboard de Suivi de Projet v3.0
+# 🎯 ALIBI - Habit Tracker & Dashboard de Suivi de Projet
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Firebase](https://img.shields.io/badge/Firebase-FFCA28?style=flat&logo=firebase&logoColor=black)](https://firebase.google.com/)
 [![Node.js](https://img.shields.io/badge/Node.js-339933?style=flat&logo=node.js&logoColor=white)](https://nodejs.org/)
 [![Python](https://img.shields.io/badge/Python-3776AB?style=flat&logo=python&logoColor=white)](https://python.org/)
 
-Ce projet fournit un tableau de bord interactif et personnalisable pour suivre l'avancement de n'importe quel projet de soutenance, mémoire ou projet complexe. Il est conçu pour être facilement adaptable, en se basant sur un simple fichier Markdown pour définir le planning.
+---
 
-![Aperçu du Dashboard](https://user-images.githubusercontent.com/12345/screenshot.png) <!-- Remplacez par une vraie capture d'écran -->
+## 🚀 Applications Déployées
 
-## ✨ Fonctionnalités
+| Application | Description | Lien |
+|-------------|-------------|------|
+| **🎯 ALIBI** | Habit tracker simple et rapide | [memoire-20adc.web.app](https://memoire-20adc.web.app) |
+| **🎯 ALIBI Pro** | Version avancée avec suivi complet | [memoire-20adc.web.app/habit-tracker-plus](https://memoire-20adc.web.app/habit-tracker-plus) |
+| **📊 Dashboard** | Suivi de projet/mémoire | [memoire-20adc.web.app/dashboard](https://memoire-20adc.web.app/dashboard) |
+
+---
+
+## 🎯 ALIBI - Habit Tracker (Version Simple)
+
+> **Transforme tes intentions en habitudes. Ultra-simple, ultra-puissant.**
+
+### 🌐 [Accéder à l'application →](https://memoire-20adc.web.app)
+
+### ✨ Fonctionnalités
+
+- **⚡ Ultra-rapide** : Ajoute une habitude en 2 secondes (juste le nom, tout le reste est optionnel)
+- **📅 Vue Calendrier** : Visualise ta semaine d'un coup d'œil
+- **🔥 Streaks** : Suis tes séries de jours consécutifs
+- **🔔 Rappels intelligents** : Notifications navigateur pour ne jamais oublier
+- **🎉 Gamification** : Confettis et célébrations quand tu complètes tes habitudes
+- **📊 Statistiques** : Taux de succès, meilleurs streaks, progression
+- **📱 PWA** : Installable sur mobile comme une vraie app
+- **🌙 Mode sombre** : Design moderne et élégant
+
+### 🚀 Comment utiliser
+
+1. **Ouvre** [https://memoire-20adc.web.app](https://memoire-20adc.web.app)
+2. **Ajoute** tes habitudes (ex: "Méditation", "Sport", "Lire 30min")
+3. **Coche** chaque jour quand c'est fait
+4. **Célèbre** tes streaks ! 🎊
+
+---
+
+## 🎯 ALIBI Pro - Habit Tracker Avancé
+
+> **Pour ceux qui veulent un suivi complet et personnalisé.**
+
+### 🌐 [Accéder à ALIBI Pro →](https://memoire-20adc.web.app/habit-tracker-plus)
+
+### ✨ Nouvelles Fonctionnalités
+
+- **📂 Catégories** : Organise tes habitudes (Spirituel, Santé, Apprentissage, Tâches, Travail, Projets, Loisirs)
+- **🔄 Fréquences Flexibles** :
+  - Tous les jours
+  - X fois par semaine (ex: 3x/semaine)
+  - Jours spécifiques (ex: Lundi, Mercredi, Vendredi)
+  - Tous les X jours (ex: tous les 2 jours)
+  - Toutes les X semaines (ex: toutes les 2 semaines)
+  - Mensuel
+- **🎯 Options au Choix** : Pour les habitudes avec plusieurs alternatives
+  - Ex: "Lire un livre" → Choix entre "La confiance en soi" ou "Believe it to achieve it"
+  - Possibilité d'ajouter de nouvelles options à la volée
+- **📊 Navigation par Onglets** :
+  - **Aujourd'hui** : Vue principale de suivi quotidien
+  - **Habitudes** : Gestion complète de toutes tes habitudes
+  - **Stats** : Statistiques détaillées par catégorie et par semaine
+  - **Ajouter** : Formulaire de création enrichi
+
+### 🎨 Workflow de Complétion
+
+Quand tu complètes une habitude avec options :
+1. Clique sur l'habitude
+2. Un modal s'affiche avec les options disponibles
+3. Sélectionne l'option choisie (ou crée une nouvelle)
+4. Valide et célèbre ! 🎉
+
+---
+
+## 📊 Dashboard de Suivi de Projet v3.0
+
+Ce projet fournit un tableau de bord interactif et personnalisable pour suivre l'avancement de n'importe quel projet de soutenance, mémoire ou projet complexe.
+
+### 🌐 [Accéder au Dashboard →](https://memoire-20adc.web.app/dashboard)
+
+### ✨ Fonctionnalités
 
 - **📊 Dashboard Interactif** : Visualisez la progression par phase, le statut des livrables et une timeline Gantt.
 - **📝 Basé sur Markdown** : Définissez tout votre planning dans un fichier `planning.md` simple et lisible.
@@ -17,29 +92,43 @@ Ce projet fournit un tableau de bord interactif et personnalisable pour suivre l
 - **⚙️ Automatisation Complète** : Scripts pour générer, importer et exporter les données.
 - **🎨 Personnalisable** : Adaptez facilement le style et la logique à vos besoins.
 
-## 🏗️ Architecture
+---
 
-Le projet est structuré pour une séparation claire des responsabilités :
+## 🏗️ Architecture
 
 ```
 /
-├── dashboard/              # Contient l'application web du tableau de bord
+├── habit-tracker/          # 🎯 ALIBI - Application simple
+│   ├── index.html          # Interface utilisateur
+│   ├── script.js           # Logique (Firebase, streaks, notifications)
+│   ├── styles.css          # Design dark mode
+│   ├── sw.js               # Service Worker (PWA)
+│   └── manifest.json       # Configuration PWA
+│
+├── habit-tracker-plus/     # 🎯 ALIBI Pro - Version avancée
+│   ├── index.html          # Interface avec onglets
+│   ├── script.js           # Logique avancée (fréquences, options, catégories)
+│   ├── styles.css          # Design Pro
+│   ├── sw.js               # Service Worker
+│   └── manifest.json       # Configuration PWA
+│
+├── dashboard/              # 📊 Dashboard de suivi de projet
 │   ├── index.html          # Structure HTML
-│   ├── script.js           # Logique du dashboard (connexion Firebase, rendu)
-│   └── styles.css          # Styles du dashboard
-├── populate_firestore.py   # Script Python pour convertir le Markdown en JSON
-├── import_data.js          # Script Node.js pour importer les données dans Firestore
-├── export_simple.js        # Script Node.js pour exporter les données
-├── delete_old_data.js      # Script Node.js pour nettoyer la base de données
-├── planning2.md            # Fichier source pour définir le planning de votre projet
-├── serviceAccountKey.json  # Clé de service Firebase (à remplacer)
-├── package.json            # Dépendances et scripts Node.js
+│   ├── script.js           # Logique du dashboard
+│   └── styles.css          # Styles
+│
+├── populate_firestore.py   # Script Python pour convertir Markdown → JSON
+├── import_data.js          # Script Node.js pour importer dans Firestore
+├── export_simple.js        # Script pour exporter les données
+├── delete_old_data.js      # Script pour nettoyer la base
+├── firebase.json           # Configuration Firebase Hosting
+├── package.json            # Dépendances Node.js
 └── requirements.txt        # Dépendances Python
 ```
 
-## 🚀 Guide de Démarrage Rapide
+---
 
-Suivez ces étapes pour lancer votre propre dashboard en moins de 10 minutes.
+## 🚀 Guide de Démarrage Rapide
 
 ### Étape 1 : Prérequis
 
@@ -49,78 +138,49 @@ Suivez ces étapes pour lancer votre propre dashboard en moins de 10 minutes.
 
 ### Étape 2 : Installation
 
-1.  **Clonez le projet :**
-    ```bash
-    git clone https://github.com/votre-username/votre-repo.git
-    cd votre-repo
-    ```
+1. **Clonez le projet :**
+   ```bash
+   git clone https://github.com/votre-username/votre-repo.git
+   cd votre-repo
+   ```
 
-2.  **Installez les dépendances Node.js et Python :**
-    ```bash
-    npm run install-deps
-    ```
+2. **Installez les dépendances :**
+   ```bash
+   npm run install-deps
+   ```
 
 ### Étape 3 : Configuration de Firebase
 
-1.  **Créez un projet Firebase** sur la [console Firebase](https://console.firebase.google.com/).
-2.  Dans votre projet, allez dans **Firestore Database** et créez une base de données en mode **Test**.
-3.  Dans les paramètres de votre projet (⚙️ -> Paramètres du projet), allez dans l'onglet **Comptes de service**.
-4.  Cliquez sur **"Générer une nouvelle clé privée"**. Un fichier `.json` sera téléchargé.
-5.  **Renommez ce fichier** en `serviceAccountKey.json` et placez-le à la racine de ce projet.
-6.  Toujours dans les paramètres, allez à l'onglet **Général**. Sous "Vos applications", créez une nouvelle **application Web** (icône `</>`).
-7.  Copiez l'objet de configuration `firebaseConfig` et collez-le dans le fichier `dashboard/script.js` en remplaçant la configuration existante.
+1. Créez un projet Firebase sur la [console Firebase](https://console.firebase.google.com/).
+2. Créez une base Firestore en mode **Test**.
+3. Générez une clé de service et renommez-la `serviceAccountKey.json`.
+4. Copiez la configuration Firebase dans les fichiers `script.js`.
 
-### Étape 4 : Personnalisez votre Planning
+### Étape 4 : Test et Déploiement
 
-1.  Ouvrez le fichier `planning2.md` (qui sera renommé en `planning.md` automatiquement).
-2.  Modifiez les phases, les semaines et les livrables pour correspondre à votre propre projet. Le script est conçu pour être flexible et s'adapte au format Markdown structuré.
+```bash
+# Test local
+npm run dev
 
-### Étape 5 : Test et Déploiement
+# Déploiement
+npm run deploy
+```
 
-1.  **Générez les données** à partir de votre fichier `planning2.md` :
-    ```bash
-    npm run generate-data
-    ```
-    *(Cela exécute `populate_firestore.py` et crée `new_firebase_data.json`)*
-
-2.  **Importez les données** dans Firestore :
-    ```bash
-    npm run import
-    ```
-    *(Cela exécute `import_data.js`)*
-
-3.  **Testez en local** :
-    Pour lancer un serveur de développement qui se met à jour en direct, utilisez :
-    ```bash
-    npm run dev
-    ```
-    Ouvrez l'URL affichée (généralement `http://localhost:5000`).
-
-4.  **Déployez sur le web :**
-    Une fois que tout fonctionne en local, déployez votre site sur Firebase Hosting :
-    ```bash
-    npm run deploy
-    ```
-
-> **Note sur Firebase Tools :**
-> Les commandes `dev` et `deploy` utilisent l'interface de ligne de commande de Firebase. Si vous ne l'avez jamais utilisée, vous devrez l'installer et vous connecter :
-> ```bash
-> # Installation globale
-> npm install -g firebase-tools
-> 
-> # Connexion à votre compte Google
-> firebase login
-> ```
+---
 
 ## 🛠️ Scripts Disponibles
 
-- `npm run setup`: Installe les dépendances Node.js.
-- `npm run generate-data`: Convertit `planning2.md` en `new_firebase_data.json`.
-- `npm run import`: Importe les données JSON dans Firestore.
-- `npm run export`: Exporte les données de Firestore vers un fichier JSON.
-- `npm run clean`: Supprime toutes les données des collections dans Firestore.
-- `npm run dev`: Lance un serveur local pour le développement.
-- `npm run deploy`: Déploie le dashboard sur Firebase Hosting.
+| Commande | Description |
+|----------|-------------|
+| `npm run setup` | Installe les dépendances Node.js |
+| `npm run generate-data` | Convertit `planning2.md` en JSON |
+| `npm run import` | Importe les données dans Firestore |
+| `npm run export` | Exporte les données Firestore |
+| `npm run clean` | Supprime les données Firestore |
+| `npm run dev` | Lance le serveur local |
+| `npm run deploy` | Déploie sur Firebase Hosting |
+
+---
 
 ## 📄 Licence
 
@@ -141,4 +201,4 @@ Les contributions sont les bienvenues ! N'hésitez pas à :
 
 ---
 
-**Développé avec ❤️ pour la communauté étudiante**
+**Développé avec ❤️ pour la communauté**

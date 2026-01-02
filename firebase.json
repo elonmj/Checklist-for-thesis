@@ -1,10 +1,36 @@
 {
   "hosting": {
-    "public": "dashboard",
+    "public": ".",
     "ignore": [
       "firebase.json",
       "**/.*",
-      "**/node_modules/**"
-    ]
+      "**/node_modules/**",
+      "*.py",
+      "serviceAccountKey.json",
+      "package*.json",
+      "requirements.txt",
+      "*.md",
+      "import_data.js",
+      "export_simple.js",
+      "delete_old_data.js",
+      "populate_firestore.py",
+      "new_firebase_data.json",
+      "firebase_data_export.json"
+    ],
+    "rewrites": [
+      {
+        "source": "/habit-tracker-plus",
+        "destination": "/habit-tracker-plus/index.html"
+      },
+      {
+        "source": "/dashboard",
+        "destination": "/dashboard/index.html"
+      },
+      {
+        "source": "**",
+        "destination": "/habit-tracker/index.html"
+      }
+    ],
+    "cleanUrls": true
   }
 }
