@@ -38,7 +38,9 @@ const FREQUENCY_LABELS = {
     specific_days: 'Jours spécifiques',
     every_x_days: 'jours',
     every_x_weeks: 'semaines',
-    monthly: 'Mensuel'
+    monthly: 'Mensuel',
+    every_x_months: 'mois',
+    novena_end_month: 'Neuvaine (fin du mois)'
 };
 
 // ============================================
@@ -79,6 +81,13 @@ class AlibiProApp {
         this.render();
         this.showApp();
         this.registerSW();
+
+        // Request notification permission and check for reminders
+        if ('Notification' in window) {
+            Notification.requestPermission().then(() => {
+                this.checkAndNotify();
+            });
+        }
     }
 
     initFirebase() {
@@ -312,6 +321,17 @@ class AlibiProApp {
                 const createdD = habit.createdAt.toDate ? habit.createdAt.toDate() : new Date(habit.createdAt);
                 return date.getDate() === createdD.getDate();
 
+            case 'every_x_months':
+                if (!habit.createdAt) return true;
+                const createdDateM = habit.createdAt.toDate ? habit.createdAt.toDate() : new Date(habit.createdAt);
+                const monthDiff = (date.getFullYear() - createdDateM.getFullYear()) * 12 + (date.getMonth() - createdDateM.getMonth());
+                return monthDiff % (freq.interval || 2) === 0 && date.getDate() === createdDateM.getDate();
+
+            case 'novena_end_month':
+                // Last 9 days of the month
+                const lastDayOfMonth = new Date(date.getFullYear(), date.getMonth() + 1, 0).getDate();
+                return date.getDate() > (lastDayOfMonth - 9);
+
             default:
                 return true;
         }
@@ -361,6 +381,10 @@ class AlibiProApp {
                 return `Toutes les ${freq.interval || 2} semaines`;
             case 'monthly':
                 return 'Mensuel';
+            case 'every_x_months':
+                return `Tous les ${freq.interval || 2} mois`;
+            case 'novena_end_month':
+                return '9 derniers jours du mois';
             default:
                 return '';
         }
@@ -422,6 +446,69 @@ class AlibiProApp {
         if (hour < 12) return 'Bonjour !';
         if (hour < 18) return 'Bon après-midi !';
         return 'Bonsoir !';
+    }
+
+    init() {
+        if ("Notification" in window) {
+            Notification.requestPermission();
+        }
+
+        // Initial check
+        this.smartNotify();
+
+        // Periodic check every 15 minutes
+        setInterval(() => this.smartNotify(), 15 * 60 * 1000);
+    }
+
+    smartNotify() {
+        if (Notification.permission !== 'granted') return;
+
+        const now = new Date();
+        const hour = now.getHours();
+        const todayStr = this.formatDate(now);
+
+        const todayHabits = this.getHabitsForToday();
+        const incomplete = todayHabits.filter(h => !this.isHabitCompletedToday(h.id));
+        const count = incomplete.length;
+
+        // 1. Morning Briefing (08:00 - 12:00)
+        // Only notify if we haven't notified for morning logic TODAY
+        if (hour >= 8 && hour < 12) {
+            const lastMorning = localStorage.getItem(`last_notify_morning_${todayStr}`);
+            if (!lastMorning && todayHabits.length > 0) {
+                this.triggerNotification(
+                    'Bonjour ! ☀️',
+                    `Prêt pour la journée ? Tu as ${todayHabits.length} habitudes prévues aujourd'hui.`,
+                    'morning',
+                    todayStr
+                );
+            }
+        }
+
+        // 2. Evening Nudge (18:00 - 23:00)
+        // Only notify if we haven't notified for evening logic TODAY and there are still incomplete habits
+        if (hour >= 18 && hour < 23) {
+            const lastEvening = localStorage.getItem(`last_notify_evening_${todayStr}`);
+            if (!lastEvening && count > 0) {
+                this.triggerNotification(
+                    'Courage ! 💪',
+                    `Il te reste ${count} habitude(s) pour terminer ta journée en beauté !`,
+                    'evening',
+                    todayStr
+                );
+            }
+        }
+    }
+
+    triggerNotification(title, body, type, dateStr) {
+        new Notification(title, {
+            body: body,
+            icon: '/tache.png', // Fallback
+            badge: '/tache.png'
+        });
+
+        // Store flag to prevent spam
+        localStorage.setItem(`last_notify_${type}_${dateStr}`, 'true');
     }
 
     // ============================================
@@ -743,6 +830,186 @@ class AlibiProApp {
 
         // Edit modal
         this.bindEditModal();
+
+        // Details modal
+        this.bindDetailsModal();
+    }
+
+    bindDetailsModal() {
+        document.getElementById('details-close').addEventListener('click', () => {
+            document.getElementById('details-modal').classList.add('hidden');
+        });
+
+        // Also close on backdrop click
+        document.getElementById('details-modal').addEventListener('click', (e) => {
+            if (e.target.classList.contains('modal-backdrop')) {
+                document.getElementById('details-modal').classList.add('hidden');
+            }
+        });
+    }
+
+    async openDetailsModal(habitId) {
+        const habit = this.habits.find(h => h.id === habitId);
+        if (!habit) return;
+
+        const modal = document.getElementById('details-modal');
+
+        // Header
+        document.getElementById('details-emoji').textContent = habit.emoji;
+        document.getElementById('details-name').textContent = habit.name;
+
+        const catBadge = document.getElementById('details-category');
+        catBadge.textContent = HABIT_CATEGORIES[habit.category] || habit.category;
+        catBadge.style.color = habit.color;
+        catBadge.style.background = `${habit.color}20`; // 20% opacity
+
+        // Description
+        const descriptionEl = document.getElementById('details-description');
+        if (habit.description) {
+            descriptionEl.textContent = habit.description;
+            descriptionEl.classList.remove('hidden');
+        } else {
+            descriptionEl.classList.add('hidden');
+        }
+
+        // Stats
+        document.getElementById('details-current-streak').textContent = habit.currentStreak || 0;
+        document.getElementById('details-best-streak').textContent = habit.bestStreak || (habit.currentStreak || 0);
+
+        const completions = this.completions.filter(c => c.habitId === habit.id);
+        document.getElementById('details-total').textContent = completions.length;
+
+        // Success rate this month
+        const now = new Date();
+        const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
+        const monthCompletions = completions.filter(c => {
+            const date = c.completedAt.toDate ? c.completedAt.toDate() : new Date(c.completedAt);
+            return date >= startOfMonth;
+        });
+
+        // Simplified rate calculation (completions / days due so far this month)
+        // This is a basic estimation, a precise one would require iterating every day
+        const daysInMonth = now.getDate();
+        let daysDue = 0;
+        for (let d = 1; d <= daysInMonth; d++) {
+            const checkDate = new Date(now.getFullYear(), now.getMonth(), d);
+            if (this.isHabitDueOnDate(habit, checkDate)) daysDue++;
+        }
+        const rate = daysDue > 0 ? Math.round((monthCompletions.length / daysDue) * 100) : 0;
+        document.getElementById('details-rate').textContent = `${rate}%`;
+
+        // Mini Calendar
+        this.renderMiniCalendar(habit, completions);
+
+        // History
+        this.renderHistory(completions);
+
+        // Frequency
+        document.getElementById('details-frequency').textContent = this.getFrequencyLabel(habit);
+
+        // Options
+        const optionsContainer = document.getElementById('details-options-section');
+        const optionsList = document.getElementById('details-options');
+        optionsList.innerHTML = '';
+
+        if (habit.hasOptions && habit.options && habit.options.length > 0) {
+            optionsContainer.classList.remove('hidden');
+            habit.options.forEach(opt => {
+                const badge = document.createElement('span');
+                badge.className = 'timeline-option';
+                badge.textContent = opt;
+                badge.style.fontSize = '14px';
+                badge.style.padding = '4px 8px';
+                badge.style.margin = '0 4px 4px 0';
+                badge.style.display = 'inline-block';
+                optionsList.appendChild(badge);
+            });
+        } else {
+            optionsContainer.classList.add('hidden');
+        }
+
+        modal.classList.remove('hidden');
+    }
+
+    renderMiniCalendar(habit, completions) {
+        const container = document.getElementById('details-mini-calendar');
+        container.innerHTML = '';
+
+        const now = new Date();
+        // Show last 28 days (4 weeks) nicely
+        for (let i = 27; i >= 0; i--) {
+            const date = new Date(now);
+            date.setDate(date.getDate() - i);
+            date.setHours(0, 0, 0, 0);
+
+            const dot = document.createElement('div');
+            dot.className = 'calendar-dot';
+
+            // Check if due
+            const isDue = this.isHabitDueOnDate(habit, date);
+
+            // Check if completed
+            const isCompleted = completions.some(c => {
+                const cDate = c.completedAt.toDate ? c.completedAt.toDate() : new Date(c.completedAt);
+                cDate.setHours(0, 0, 0, 0);
+                return cDate.getTime() === date.getTime();
+            });
+
+            if (isCompleted) {
+                dot.classList.add('completed');
+                dot.title = date.toLocaleDateString();
+            } else if (isDue && date < new Date().setHours(0, 0, 0, 0)) {
+                dot.classList.add('missed');
+            } else if (!isDue) {
+                dot.classList.add('not-due');
+            }
+
+            if (i === 0) dot.classList.add('today');
+
+            container.appendChild(dot);
+        }
+    }
+
+    renderHistory(completions) {
+        const container = document.getElementById('details-history');
+        container.innerHTML = '';
+
+        // Sort newest first
+        const sorted = [...completions].sort((a, b) => {
+            const da = a.completedAt.toDate ? a.completedAt.toDate() : new Date(a.completedAt);
+            const db = b.completedAt.toDate ? b.completedAt.toDate() : new Date(b.completedAt);
+            return db - da;
+        });
+
+        // Show last 10
+        sorted.slice(0, 10).forEach(c => {
+            const date = c.completedAt.toDate ? c.completedAt.toDate() : new Date(c.completedAt);
+
+            const item = document.createElement('div');
+            item.className = 'timeline-item';
+
+            const dateStr = date.toLocaleDateString('fr-FR', { day: 'numeric', month: 'short' });
+            const timeStr = date.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' });
+
+            let content = `Complété à ${timeStr}`;
+            if (c.option) {
+                content += `<span class="timeline-option">${c.option}</span>`;
+            }
+            if (c.value) {
+                content += `<span class="timeline-option">${c.value}</span>`;
+            }
+
+            item.innerHTML = `
+                <div class="timeline-date">${dateStr}</div>
+                <div class="timeline-content">${content}</div>
+            `;
+
+            container.appendChild(item);
+        });
+
+        if (completions.length === 0) {
+            container.innerHTML = '<div style="padding:16px; text-align:center; color:var(--text-muted)">Pas encore d\'historique</div>';
+        }
     }
 
     bindAddForm() {
@@ -828,12 +1095,12 @@ class AlibiProApp {
 
     updateFrequencyUI(type) {
         const detailsContainer = document.getElementById('frequency-details');
-        const options = ['freq-times-week', 'freq-specific-days', 'freq-every-x-days', 'freq-every-x-weeks'];
+        const options = ['freq-times-week', 'freq-specific-days', 'freq-every-x-days', 'freq-every-x-weeks', 'freq-every-x-months'];
 
         // Hide all
         options.forEach(id => document.getElementById(id)?.classList.add('hidden'));
 
-        if (type === 'daily' || type === 'monthly') {
+        if (type === 'daily' || type === 'monthly' || type === 'novena_end_month') {
             detailsContainer.classList.add('hidden');
             return;
         }
@@ -844,7 +1111,8 @@ class AlibiProApp {
             'times_per_week': 'freq-times-week',
             'specific_days': 'freq-specific-days',
             'every_x_days': 'freq-every-x-days',
-            'every_x_weeks': 'freq-every-x-weeks'
+            'every_x_weeks': 'freq-every-x-weeks',
+            'every_x_months': 'freq-every-x-months'
         };
 
         if (mapping[type]) {
@@ -864,6 +1132,8 @@ class AlibiProApp {
                 return { type, interval: parseInt(document.getElementById('every-x-days').value) || 2 };
             case 'every_x_weeks':
                 return { type, interval: parseInt(document.getElementById('every-x-weeks').value) || 2 };
+            case 'every_x_months':
+                return { type, interval: parseInt(document.getElementById('every-x-months').value) || 2 };
             default:
                 return { type };
         }
@@ -1064,6 +1334,144 @@ class AlibiProApp {
 
         document.querySelectorAll('.tab-panel').forEach(panel => {
             panel.classList.toggle('active', panel.id === `tab-${tab}`);
+        });
+
+        // Trigger render
+        if (tab === 'today') this.renderTodayTab();
+        if (tab === 'habits') this.renderHabitsTab();
+        if (tab === 'stats') this.renderStatsTab();
+        if (tab === 'upcoming') this.renderUpcomingTab();
+    }
+
+    renderUpcomingTab() {
+        // Clear lists
+        const todayList = document.getElementById('upcoming-today-list');
+        const weekList = document.getElementById('upcoming-week-list');
+        const laterList = document.getElementById('upcoming-later-list');
+
+        if (todayList) todayList.innerHTML = '';
+        if (weekList) weekList.innerHTML = '';
+        if (laterList) laterList.innerHTML = '';
+
+        if (!todayList) return; // Safety check
+
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+
+        // 1. Today
+        const todayHabits = this.habits.filter(h => this.isHabitDueOnDate(h, today));
+        this.renderUpcomingList(todayHabits, 'upcoming-today-list', today, true);
+
+        // 2. This Week (Tomorrow to +7 days)
+        const weekHabits = [];
+        for (let i = 1; i <= 7; i++) {
+            const date = new Date(today);
+            date.setDate(date.getDate() + i);
+            const habitsDue = this.habits.filter(h => this.isHabitDueOnDate(h, date));
+            habitsDue.forEach(h => {
+                weekHabits.push({ habit: h, date: new Date(date) });
+            });
+        }
+        // Sort by date
+        weekHabits.sort((a, b) => a.date - b.date);
+        this.renderUpcomingListWithDates(weekHabits, 'upcoming-week-list');
+
+        // 3. Later (Next occurrence > 7 days)
+        // Simple approach: look ahead 30 days starting from day 8
+        const laterHabits = [];
+        for (let i = 8; i <= 30; i++) {
+            const date = new Date(today);
+            date.setDate(date.getDate() + i);
+            const habitsDue = this.habits.filter(h => this.isHabitDueOnDate(h, date));
+            habitsDue.forEach(h => {
+                laterHabits.push({ habit: h, date: new Date(date) });
+            });
+        }
+        laterHabits.sort((a, b) => a.date - b.date);
+
+        // Limit later items to 20 to avoid clutter
+        this.renderUpcomingListWithDates(laterHabits.slice(0, 20), 'upcoming-later-list');
+    }
+
+    renderUpcomingList(habits, containerId, date, isToday = false) {
+        const list = document.getElementById(containerId);
+        if (!list) return;
+
+        if (habits.length === 0) {
+            list.innerHTML = `<div class="empty-state" style="padding:10px; font-size:14px; text-align:center; color:var(--text-muted)">Rien de prévu</div>`;
+            return;
+        }
+
+        habits.forEach(habit => {
+            const card = document.createElement('div');
+            card.className = `habit-card compact ${this.isHabitCompletedOnDate(habit, date) ? 'completed' : ''}`;
+
+            let statusIcon = isToday ? (this.isHabitCompletedOnDate(habit, date) ? '✅' : '⏳') : '📅';
+
+            card.innerHTML = `
+                <div class="category-dot" style="background: ${habit.color}"></div>
+                <div class="habit-info">
+                    <div class="habit-name">
+                        <span class="emoji">${habit.emoji}</span>
+                        ${habit.name}
+                    </div>
+                     <div class="habit-time">${isToday ? 'Aujourd\'hui' : date.toLocaleDateString('fr-FR', { weekday: 'long' })}</div>
+                </div>
+                <div class="habit-status">${statusIcon}</div>
+            `;
+
+            card.addEventListener('click', () => {
+                this.openDetailsModal(habit.id);
+            });
+
+            list.appendChild(card);
+        });
+    }
+
+    renderUpcomingListWithDates(items, containerId) {
+        const list = document.getElementById(containerId);
+        if (!list) return;
+
+        if (items.length === 0) {
+            list.innerHTML = `<div class="empty-state" style="padding:10px; font-size:14px; text-align:center; color:var(--text-muted)">Rien à venir</div>`;
+            return;
+        }
+
+        items.forEach(item => {
+            const habit = item.habit;
+            const date = item.date;
+
+            const card = document.createElement('div');
+            card.className = 'habit-card compact';
+
+            const dateStr = date.toLocaleDateString('fr-FR', { weekday: 'long', day: 'numeric', month: 'short' });
+
+            card.innerHTML = `
+                <div class="category-dot" style="background: ${habit.color}"></div>
+                <div class="habit-info">
+                    <div class="habit-name">
+                        <span class="emoji">${habit.emoji}</span>
+                        ${habit.name}
+                    </div>
+                    <div class="habit-time" style="color:var(--text-muted); font-size:12px;">${dateStr}</div>
+                </div>
+            `;
+
+            card.addEventListener('click', () => {
+                this.openDetailsModal(habit.id);
+            });
+
+            list.appendChild(card);
+        });
+    }
+
+    isHabitCompletedOnDate(habit, date) {
+        const d = new Date(date);
+        d.setHours(0, 0, 0, 0);
+        return this.completions.some(c => {
+            const cDate = c.completedAt.toDate ? c.completedAt.toDate() : new Date(c.completedAt);
+            cDate.setHours(0, 0, 0, 0);
+            return cDate.getTime() === d.getTime() && c.habitId === habit.id;
         });
     }
 
